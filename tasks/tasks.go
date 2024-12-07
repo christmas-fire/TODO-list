@@ -81,16 +81,22 @@ func GetTaskByID(db *sql.DB, id int) (Task, error) {
 	return t, nil
 }
 
-func UpdateTask(db *sql.DB, id int, status bool, description string) error {
+func UpdateTask(db *sql.DB, id int, status bool, title, description string) error {
+	var completeTime interface{} = nil
+	if status {
+		now := time.Now()
+		completeTime = now
+	}
+
 	// SQL-запрос для обновления задачи
 	query := `
 		UPDATE tasks
-		SET status = $1, description = $2
-		WHERE id = $3;
+		SET status = $1, title = $2, description = $3, complete_time = $4
+		WHERE id = $5;
 	`
 
 	// Выполняем запрос
-	_, err := db.Exec(query, status, description, id)
+	_, err := db.Exec(query, status, title, description, completeTime, id)
 	if err != nil {
 		return fmt.Errorf("не удалось обновить задачу: %v", err)
 	}

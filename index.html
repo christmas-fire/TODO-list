@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список задач</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Боковая панель -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>Задачи</h1>
+                <button id="themeToggle" class="theme-toggle">
+                    <span class="material-icons light-icon">light_mode</span>
+                    <span class="material-icons dark-icon">dark_mode</span>
+                </button>
+            </div>
+            <div class="sidebar-content">
+                <button id="newTaskBtn" class="sidebar-button new-task-btn">
+                    <span class="material-icons">add</span>
+                    Новая задача
+                </button>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="main-content">
+            <div class="filters">
+                <div class="filter-group">
+                    <input type="text" id="searchInput" placeholder="Поиск по названию..." class="filter-input">
+                </div>
+                <div class="filter-group">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">Все статусы</option>
+                        <option value="active">Активные</option>
+                        <option value="completed">Выполненные</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="dateFilter" class="filter-select">
+                        <option value="all">Все даты</option>
+                        <option value="today">Сегодня</option>
+                        <option value="week">За неделю</option>
+                        <option value="month">За месяц</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="sortFilter" class="filter-select">
+                        <option value="createDesc">Сначала новые</option>
+                        <option value="createAsc">Сначала старые</option>
+                        <option value="completeDesc">По дате выполнения ↓</option>
+                        <option value="completeAsc">По дате выполнения ↑</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tasks-container">
+                <!-- Список задач -->
+                <div id="tasksList" class="tasks-list">
+                    <!-- Задачи будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для добавления/редактирования задачи -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Новая задача</h2>
+            <input type="text" id="taskTitle" placeholder="Название задачи" required>
+            <input type="text" id="taskDescription" placeholder="Описание задачи">
+            <div class="modal-buttons">
+                <button id="saveTaskBtn">Сохранить</button>
+                <button onclick="closeModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
