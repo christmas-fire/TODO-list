@@ -1,0 +1,361 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #37352f;
+    --sidebar-bg: #fbfbfa;
+    --sidebar-hover: #efefef;
+    --card-bg: #ffffff;
+    --border-color: #e9e9e8;
+    --button-bg: #e9e9e8;
+    --button-hover: #efefef;
+    --button-text: #37352f;
+    --delete-button: #ff4d4d;
+    --delete-hover: #ff3333;
+    --edit-button: #2eaadc;
+    --edit-hover: #2196c4;
+    --status-button: #14b8a6;
+    --status-hover: #0d9488;
+    --modal-overlay: rgba(15, 15, 15, 0.6);
+    --modal-bg: #ffffff;
+    --completed-bg: #fbfbfa;
+    --completed-opacity: 0.7;
+    --shadow-color: rgba(15, 15, 15, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-color: #191919;
+    --text-color: #e6e6e6;
+    --sidebar-bg: #202020;
+    --sidebar-hover: #2f2f2f;
+    --card-bg: #262626;
+    --border-color: #333333;
+    --button-bg: #333333;
+    --button-hover: #404040;
+    --button-text: #e6e6e6;
+    --delete-button: #dc2626;
+    --delete-hover: #b91c1c;
+    --edit-button: #0284c7;
+    --edit-hover: #0369a1;
+    --status-button: #0d9488;
+    --status-hover: #0f766e;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+    --modal-bg: #262626;
+    --completed-bg: #202020;
+    --completed-opacity: 0.6;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Боковая панель */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.sidebar-header {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--sidebar-bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    padding: 0.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+    opacity: 1;
+    background-color: var(--sidebar-hover);
+}
+
+.sidebar-content {
+    padding: 1rem;
+}
+
+.sidebar-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 3px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+}
+
+.sidebar-button:hover {
+    background-color: var(--sidebar-hover);
+}
+
+.new-task-btn {
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.new-task-btn:hover {
+    opacity: 1;
+}
+
+.material-icons {
+    font-size: 1.2rem;
+}
+
+[data-theme="dark"] .light-icon,
+[data-theme="light"] .dark-icon {
+    display: none;
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.tasks-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Задачи */
+.task-item {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.task-item:hover {
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.task-content {
+    margin-bottom: 1rem;
+}
+
+.task-title {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.task-description {
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.task-actions button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.9rem;
+}
+
+.delete-btn {
+    background-color: var(--delete-button);
+}
+
+.delete-btn:hover {
+    background-color: var(--delete-hover);
+}
+
+.edit-btn {
+    background-color: var(--edit-button);
+}
+
+.edit-btn:hover {
+    background-color: var(--edit-hover);
+}
+
+.status-btn {
+    background-color: var(--status-button);
+}
+
+.status-btn:hover {
+    background-color: var(--status-hover);
+}
+
+.completed {
+    opacity: var(--completed-opacity);
+    background-color: var(--completed-bg);
+}
+
+.completed .task-title {
+    text-decoration: line-through;
+}
+
+.task-dates {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* Фильтры */
+.filters {
+    padding: 1rem;
+    background: var(--sidebar-bg);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-input,
+.filter-select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.filter-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.filter-select option {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--modal-bg);
+    padding: 2rem;
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 400px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-buttons button:first-child {
+    background-color: var(--status-button);
+    color: white;
+}
+
+.modal-buttons button:first-child:hover {
+    background-color: var(--status-hover);
+}
+
+.modal-buttons button:last-child {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+.modal-buttons button:last-child:hover {
+    background-color: var(--button-hover);
+}
