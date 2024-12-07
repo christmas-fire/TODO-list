@@ -7,8 +7,8 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"todo_list/database"
-	"todo_list/tasks"
+	"todo_list/internal/database"
+	"todo_list/internal/tasks"
 
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
@@ -43,18 +43,18 @@ func main() {
 
 	// Обработчик для корневого маршрута
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "index.html")
+		http.ServeFile(w, r, "/web/templates/index.html")
 	}).Methods("GET")
 
 	// Обработчики для статических файлов
-	r.HandleFunc("/styles.css", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/static/styles.css", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/css")
-		http.ServeFile(w, r, "styles.css")
+		http.ServeFile(w, r, "/static/styles.css")
 	}).Methods("GET")
 
-	r.HandleFunc("/script.js", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/static/script.js", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/javascript")
-		http.ServeFile(w, r, "script.js")
+		http.ServeFile(w, r, "/static/script.js")
 	}).Methods("GET")
 
 	// API маршруты
