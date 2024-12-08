@@ -34,7 +34,6 @@ func AddTask(db *sql.DB, title, description string) (int, error) {
 }
 
 func GetAllTasks(db *sql.DB) ([]Task, error) {
-	// SQL-запрос для получения всех задач
 	query := "SELECT id, title, description, status, create_time, complete_time FROM tasks"
 	rows, err := db.Query(query)
 	if err != nil {
@@ -42,10 +41,8 @@ func GetAllTasks(db *sql.DB) ([]Task, error) {
 	}
 	defer rows.Close()
 
-	// Срез для хранения задач
 	var tasks []Task
 
-	// Пробегаем по результатам запроса
 	for rows.Next() {
 		var t Task
 		err := rows.Scan(&t.Id, &t.Title, &t.Description, &t.Status, &t.CreateTime, &t.CompleteTime)
@@ -55,7 +52,6 @@ func GetAllTasks(db *sql.DB) ([]Task, error) {
 		tasks = append(tasks, t)
 	}
 
-	// Проверяем, если в запросе возникла ошибка
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
@@ -64,7 +60,6 @@ func GetAllTasks(db *sql.DB) ([]Task, error) {
 }
 
 func GetTaskByID(db *sql.DB, id int) (Task, error) {
-	// SQL-запрос для получения задачи по ID
 	query := "SELECT id, title, description, status, create_time, complete_time FROM tasks WHERE id = $1"
 	row := db.QueryRow(query, id)
 
@@ -72,7 +67,6 @@ func GetTaskByID(db *sql.DB, id int) (Task, error) {
 	err := row.Scan(&t.Id, &t.Title, &t.Description, &t.Status, &t.CreateTime, &t.CompleteTime)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			// Если задачи с таким ID нет, возвращаем ошибку
 			return t, errors.New("задача не найдена")
 		}
 		return t, err
@@ -88,14 +82,12 @@ func UpdateTask(db *sql.DB, id int, status bool, title, description string) erro
 		completeTime = now
 	}
 
-	// SQL-запрос для обновления задачи
 	query := `
 		UPDATE tasks
 		SET status = $1, title = $2, description = $3, complete_time = $4
 		WHERE id = $5;
 	`
 
-	// Выполняем запрос
 	_, err := db.Exec(query, status, title, description, completeTime, id)
 	if err != nil {
 		return fmt.Errorf("не удалось обновить задачу: %v", err)
@@ -105,13 +97,11 @@ func UpdateTask(db *sql.DB, id int, status bool, title, description string) erro
 }
 
 func DeleteTask(db *sql.DB, id int) error {
-	// SQL-запрос для удаления задачи по ID
 	query := `
 		DELETE FROM tasks
 		WHERE id = $1;
 	`
 
-	// Выполняем запрос
 	_, err := db.Exec(query, id)
 	if err != nil {
 		return fmt.Errorf("не удалось удалить задачу: %v", err)
@@ -121,7 +111,6 @@ func DeleteTask(db *sql.DB, id int) error {
 }
 
 func GetTasksByStatus(db *sql.DB, status bool) ([]Task, error) {
-	// SQL-запрос для фильтрации по статусу
 	query := `
 		SELECT id, title, description, status, create_time, complete_time
 		FROM tasks
@@ -134,6 +123,7 @@ func GetTasksByStatus(db *sql.DB, status bool) ([]Task, error) {
 	defer rows.Close()
 
 	var tasks []Task
+
 	for rows.Next() {
 		var t Task
 		err := rows.Scan(&t.Id, &t.Title, &t.Description, &t.Status, &t.CreateTime, &t.CompleteTime)
@@ -147,7 +137,6 @@ func GetTasksByStatus(db *sql.DB, status bool) ([]Task, error) {
 }
 
 func GetTasksByCreateDate(db *sql.DB, date string) ([]Task, error) {
-	// SQL-запрос для фильтрации по дате создания
 	query := `
 		SELECT id, title, description, status, create_time, complete_time
 		FROM tasks
@@ -173,7 +162,6 @@ func GetTasksByCreateDate(db *sql.DB, date string) ([]Task, error) {
 }
 
 func GetTasksByKeyword(db *sql.DB, keyword string) ([]Task, error) {
-	// SQL-запрос для поиска по ключевым словам
 	query := `
 		SELECT id, title, description, status, create_time, complete_time
 		FROM tasks
@@ -186,6 +174,7 @@ func GetTasksByKeyword(db *sql.DB, keyword string) ([]Task, error) {
 	defer rows.Close()
 
 	var tasks []Task
+	
 	for rows.Next() {
 		var t Task
 		err := rows.Scan(&t.Id, &t.Title, &t.Description, &t.Status, &t.CreateTime, &t.CompleteTime)
