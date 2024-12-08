@@ -14,7 +14,6 @@ func InitDB() *sql.DB {
 		log.Fatalf("Не удалось подключиться к базе данных: %v", err)
 	}
 
-	// Проверяем соединение
 	if err := db.Ping(); err != nil {
 		log.Fatalf("База данных недоступна: %v", err)
 	}
